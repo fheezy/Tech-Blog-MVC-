@@ -3,7 +3,7 @@
 ## Descrition 
 
 Hi, Welcome to my Tech Blog Project! </br>
-Where developers are able to publish thier own blogs, post, and comment on another developer post as well. A great </br>
+Where developers are able to publish thier own blogs, post, and comment on another developer post as well. A great 
 way for developers to interacte and learn. 
 
 ## Table of Contents 
