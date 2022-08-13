@@ -31,7 +31,7 @@ const Comment = sequelizeConnection.define('comment', {
         }
     }
 
-}, {
+}, 
     sequelize: sequelizeConnection,
     timestamps: true,
     freezeTableName: true,
