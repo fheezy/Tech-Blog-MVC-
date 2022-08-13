@@ -31,3 +31,6 @@ const User = sequelizeConnection.define('user', {
     underscored: true,
     modelName: 'users'
 });
+
+//call back function 
+User.beforeCreate()
