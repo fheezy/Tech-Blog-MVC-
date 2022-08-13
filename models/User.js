@@ -33,4 +33,8 @@ const User = sequelizeConnection.define('user', {
 });
 
 //call back function 
-User.beforeCreate()
+User.beforeCreate(async user => {
+    user.password - await bcrypt.hash(user.password, 15);
+});
+
+module.exports = User;
