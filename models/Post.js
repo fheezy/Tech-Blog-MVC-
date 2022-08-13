@@ -8,6 +8,12 @@ const User = sequelizeConnection.define('post', {
         autoIncrement: true,
         allowNull: false
     },
+
+    title: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+
 // allows text
     content: {
         type: Sequelize.TEXT,
@@ -25,7 +31,7 @@ const User = sequelizeConnection.define('post', {
 
 }, {
     sequelize: sequelizeConnection,
-    timestamps: false,
+    timestamps: true,
     freezeTableName: true,
     modelName: 'post',
     underscored: true,
