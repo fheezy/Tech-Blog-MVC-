@@ -67,3 +67,48 @@ router.get("/:id", (req, res) => {
         res.status(500).json(err);
     });
 });
+
+// Login (post)
+router.post("/login", (req, res) => {
+    User.findOne({
+        where: {
+            email: req.body.email
+        }
+    })
+    .then(dbUserData => {
+        if (!dbUserData) {
+            res.status(400).json({ message: "User was not found" })
+            return;
+        }
+        req.session.save(() => {
+            req.session.user_id = dbUserData.id;
+            req.session.username = dbUserData.username;
+            req.session.loggedIn = true;
+      
+            res.json({
+              user: dbUserData,
+              message: " You're Logged in ",
+            });
+          });
+          // Password Verficaiton
+          const validPassword = dbUserData.checkPassword(req.body.password);
+
+    if (!validPassword) {
+      res.status(400).json({
+        message: "Password is incorrect, Try Again",
+      });
+      return;
+    }
+
+    req.session.save(() => {
+      req.session.user_id = dbUserData.id;
+      req.session.username = dbUserData.username;
+      req.session.loggedIn = true;
+
+      res.json({
+        user: dbUserData,
+        message: "You're Logged In ",
+      });
+    });
+  });
+});
