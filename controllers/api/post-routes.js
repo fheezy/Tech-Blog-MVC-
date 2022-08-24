@@ -28,3 +28,40 @@ router.get("/", (req, res) => {
       res.status(500).json(err);
     });
 });
+
+// Post by ID
+router.get("/:id", (req, res) => {
+    Post.findOne({
+        where: {
+            id: req.params.id,
+          },
+          attributes: ["title", "created_at", "id", "content"],
+          include: [
+            {
+              model: User,
+              attributes: ["username"],
+            },
+            {
+              model: Comment,
+              attributes: ["post_id", "comment_text", "user_id", "id", "created_at"],
+              include: {
+                model: User,
+                attributes: ["username"],
+              },
+            },
+          ],
+        })
+          .then((dbPostData) => {
+            if (!dbPostData) {
+              res.status(404).json({
+                message: "This ID Post has not been found",
+              });
+              return;
+            }
+            res.json(dbPostData);
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+      });
