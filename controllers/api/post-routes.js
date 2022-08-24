@@ -94,7 +94,7 @@ router.get("/:id", (req, res) => {
         )
         .then(dbPostData => {
             if (!dbPostData) {
-                res.status(404).json({ message: "No post w/ id found." });
+                res.status(404).json({ message: "This ID Post has not been found." });
                 return;
             }
             res.json(dbPostData);
@@ -104,4 +104,24 @@ router.get("/:id", (req, res) => {
             res.status(500).json(err);
         });
     });
+
+    // Post (Delete)
+    router.delete('/api/posts/:id', (req, res) => {
+        Post.destroy({
+            where: id.params.id
+        })
+        .then(dbPostData => {
+            if (!dbPostData) {
+                res.status(404).json({ message: 'This ID Post has not been found.' });
+                return;
+            }
+            res.json(dbPostData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    });
+    
+    module.exports = router;
     
