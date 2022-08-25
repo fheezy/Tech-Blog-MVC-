@@ -112,3 +112,36 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
+//Logout (post)
+router.post("/logout", (req, res) => {
+    if (req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end();
+        });
+    }
+    else {
+        res.status(404).end();
+    }
+});
+
+// PUT ID
+router.put("/:id", (req, res) => {
+    User.update(req.body, {
+        individualHooks: true, 
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbUserData => {
+        if (!dbUserData[0]) {
+            res.status(404).json({ message: "User was not found."});
+            return;
+        }
+        res.json(dbUserData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
